@@ -61,7 +61,7 @@ ul.headlines li { margin-bottom: 10px; }
 ======================================================================*/
 .clear { clear: both; }
 #frame { width: 100%; height: 100%; }
-#page { clear: both; margin: auto; padding: 10px 20px 0 20px; height: 90%; }
+#page { clear: both; margin: auto; padding: 50px 20px 0 20px; height: 90%; }
 
 /* Columns */
 .c2l, .c2r { width: 48%; }
