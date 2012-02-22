@@ -19,8 +19,6 @@
   var searchStr;
   var searchRadiusCircle;
   
-  var heatmapLayer;
-  
   google.load('visualization', '1', {}); //used for custom SQL call to get count
   
   function initialize() {
@@ -242,19 +240,14 @@
 		return x1 + x2;
 	}
 	
-	function showHeatmap()
+	function viewAsHeatMap()
 	{
-	heatmapLayer = new google.maps.FusionTablesLayer({
+	layer = new google.maps.FusionTablesLayer({
 		query: {
 		select: 'geometry',
 		from: '2961086'
 	},
 	heatmap: { enabled: true }
 	});
-	heatmapLayer.setMap(map);
-	}
-	
-	function hideHeatmap()
-	{
-		heatmapLayer.setMap(null);
+	layer.setMap(map);
 	}
