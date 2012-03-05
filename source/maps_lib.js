@@ -61,25 +61,14 @@
 		//-----filter by type-------
 		//remove this if you don't have any types to filter
 		
-		//best way to filter results by a type is to create a 'type' column and assign each row a number (strings work as well, but numbers are faster). then we can use the 'IN' operator and return all that are selected
-	/*	var searchType = ""; // IN (-1,";
-
-        	if (type1) //drop-off center
-			searchType += "sector = 'film' AND ";
-		if (type2) //private
-			searchType += "sector = 'games' AND ";
-		if (type3) //hazardous waste site
-			searchType += "sector = 'pub' AND ";
-
-        searchStr += searchType; //searchType.slice(0, searchType.length - 1) + ")";
-	*/
-  	var searchType = "sector IN ( ";
-        if (type1) //drop-off center
-			searchType += "'film',";
-		if (type2) //private
-			searchType += "'games',";
-		if (type3) //hazardous waste site
-			searchType += "'pub',";
+		//best way to filter results by a type is to create a 'type' column and assign each row a number (strings work as well, but numbers are faster). then we can use the 'IN' operator and return all that are selected		
+		var searchType = "sector IN ( ";
+        if (type1)
+			searchType += "'Film',";
+		if (type2)
+			searchType += "'Games',";
+		if (type3)
+			searchType += "'Publishing',";
 
         searchStr += " AND " + searchType.slice(0, searchType.length - 1) + ")";
 
