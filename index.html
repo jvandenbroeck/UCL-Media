@@ -77,9 +77,13 @@
 					<span class='mute'><a href='#' onclick="initialize();">reset map</a></span>
 					<span id='resultCount'>&nbsp;</span>
 					<hr />
-					
-						<textarea rows=5 cols=20 id=map_source>
+
+
+					<form name="map_source_form" action="" >
+						<textarea rows=3 cols=45 id=map_source disabled=disabled name=map_source>
 						</textarea>
+					</form> 
+						<a href="javascript:copy(document.map_source_form.map_source);">Copy the Text!</a>
 
 
 					<div id="test"></div>
@@ -147,5 +151,28 @@
 				}
 			}
 		</script>
+<script language="javascript">
+
+
+function copy(inElement) {
+  if (inElement.createTextRange) {
+    var range = inElement.createTextRange();
+    if (range)
+      range.execCommand('Copy');
+  } else {
+    var flashcopier = 'flashcopier';
+    if(!document.getElementById(flashcopier)) {
+      var divholder = document.createElement('div');
+      divholder.id = flashcopier;
+      document.body.appendChild(divholder);
+    }
+    document.getElementById(flashcopier).innerHTML = '';
+    var divinfo = '<embed src="_clipboard.swf" FlashVars="clipboard='+encodeURIComponent(inElement.value)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
+    document.getElementById(flashcopier).innerHTML = divinfo;
+  }
+}
+
+</script>
+		
 	</body>
 </html>
