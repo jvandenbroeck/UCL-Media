@@ -77,8 +77,13 @@
 					<span class='mute'><a href='#' onclick="initialize();">reset map</a></span>
 					<span id='resultCount'>&nbsp;</span>
 					<hr />
+					
+						<textarea rows=5 cols=20 id=map_source>
+						</textarea>
+
 
 					<div id="test"></div>
+
 
 					<a href="" onclick="printSelection(document.getElementById('map_canvas'));return false">Get HTML code from the map.</a>
 
@@ -116,8 +121,11 @@
 
 		<script type="text/javascript">
 			function printSelection(node){
-				var content=node.innerHTML
-				document.getElementById('test').innerText= content;
+				var content = node.innerHTML;
+
+				//document.map_source.textarea.value = content
+
+				document.getElementById('map_source').innerText= content;
 			}
 		</script>
 
