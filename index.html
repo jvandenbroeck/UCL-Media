@@ -86,13 +86,16 @@
 					<hr />
 
 
+					<!-- start get html --> 
+					<a href="" onclick="printSelection(document.getElementById('map_canvas'));return false">Get HTML code from the map.</a>
+
+
+					<div id=get_html style="display:none">
 					<form name="map_source_form" action="" >
 						<textarea rows=4 cols=45 id=map_source disabled=disabled name=map_source onChange="clip.setText(this.value)">
 						</textarea>
 					</form> 
 
-
-					<div id="test"></div>
 
 
 								<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div>
@@ -100,10 +103,9 @@
 
 
 								<div id="d_debug"><h4>debug</h4></div>
-
-					<a href="" onclick="printSelection(document.getElementById('map_canvas'));return false">Get HTML code from the map.</a>
-
-					<hr />
+							</div>			
+								
+								<hr />
 
 					<p class='mute'>View the raw data in Fusion Tables <a href='http://www.google.com/fusiontables/DataSource?dsrcid=2961086'>here</a>. 
 				</div>
@@ -142,6 +144,7 @@
 		//document.map_source.textarea.value = content
 
 		document.getElementById('map_source').innerText= content;
+		document.getElementById('get_html').style.display='block';
 	}
 </script>
 
