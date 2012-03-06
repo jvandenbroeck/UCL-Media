@@ -6,19 +6,19 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<meta name="description" content="This page provides various visualizations of data from the worldwide media industry according to user-chosen parameters.">
 		<meta name="author" content="Joris Van den Broeck, Morrison Cole">
-		
+
 		<!-- Styles -->
 		<link href="assets/css/bootstrap.css" rel="stylesheet">
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 		<link href='styles/map.css' media='all' rel='stylesheet' type='text/css' />
-		
+
 		<!-- A HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	</head>
-	
-	<body>
+
+	<body onLoad="init()">
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-fluid">
@@ -57,7 +57,7 @@
 						<h4>Address <span>(<a href='#' onclick="findMe(); return false;">find me</a>)</span></h4>
 						<p><input class='txt hint' type="text" title="Enter an address or an intersection &hellip;" id="txtSearchAddress" onkeydown="if (event.keyCode == 13) document.getElementById('btnSearch').click()"/></p>
 					</div>
-					
+
 					<div class='input-radius'>
 						<h4>&nbsp;<span class='mute'>within &hellip;</span></h4>
 						<p>
@@ -70,9 +70,16 @@
 						</select>
 						</p>
 					</div>
-					
+
+					<h4>TIF amount allocated</h4>
+					<div id="amount-range"></div>
+					<span class='mute' id="amount" /></span><br />
+
+
+
+
 					<div class='clear'></div>
-					
+
 					<input class="btn" type="button" id="btnSearch" value="Search" onclick="doSearch();" />
 					<span class='mute'><a href='#' onclick="initialize();">reset map</a></span>
 					<span id='resultCount'>&nbsp;</span>
@@ -80,14 +87,19 @@
 
 
 					<form name="map_source_form" action="" >
-						<textarea rows=4 cols=45 id=map_source disabled=disabled name=map_source>
+						<textarea rows=4 cols=45 id=map_source disabled=disabled name=map_source onChange="clip.setText(this.value)">
 						</textarea>
 					</form> 
-						<a href="javascript:copy(document.map_source_form.map_source);">Copy the Text!</a>
 
 
 					<div id="test"></div>
 
+
+								<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div>
+										
+
+
+								<div id="d_debug"><h4>debug</h4></div>
 
 					<a href="" onclick="printSelection(document.getElementById('map_canvas'));return false">Get HTML code from the map.</a>
 
@@ -96,12 +108,12 @@
 					<p class='mute'>View the raw data in Fusion Tables <a href='http://www.google.com/fusiontables/DataSource?dsrcid=2961086'>here</a>. 
 				</div>
 			</div>
-			
+
 			<div class="content-primary">
 				<div id="map_canvas"></div>
 			</div>
 		</div>
-	
+
 		<!-- Javascript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
@@ -115,64 +127,108 @@
 
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
-				initialize();
-				jQuery(".hint").ezpz_hint();
-				$(':checkbox').click(function(){
-					doSearch();
-				});
-			});
-		</script>
+					initialize();
+					jQuery(".hint").ezpz_hint();
+					$(':checkbox').click(function(){
+						doSearch();
+						});
+					});
+</script>
 
-		<script type="text/javascript">
-			function printSelection(node){
-				var content = node.innerHTML;
+<script type="text/javascript">
+	function printSelection(node){
+		var content = node.innerHTML;
 
-				//document.map_source.textarea.value = content
+		//document.map_source.textarea.value = content
 
-				document.getElementById('map_source').innerText= content;
-			}
-		</script>
+		document.getElementById('map_source').innerText= content;
+	}
+</script>
 
-		<script>
-			$(function () {
-				$('.tabs a:last').tab('show')
-			})
-		</script>
+<script>
+	$(function () {
+		$('.tabs a:last').tab('show')
+	})
+</script>
+
+<script type="text/javascript">
+	function checkHeatmap(){
+		var checkbox = document.getElementById("cbType4");
+		if(checkbox.checked){
+			showHeatmap();
+		}
+		else
+		{
+			hideHeatmap();
+		}
+	}
+</script>
+
+<script type="text/javascript" src="zeroclipboard/ZeroClipboard.js"></script>
+<style type="text/css">
+	body { font-family:arial,sans-serif; font-size:9pt; }
+
+	.my_clip_button { width:150px; text-align:center; border:1px solid black; background-color:#ccc; margin:10px; padding:10px; cursor:default; font-size:9pt; }
+	.my_clip_button.hover { background-color:#eee; }
+	.my_clip_button.active { background-color:#aaa; }
+</style>
+
+<script language="JavaScript">
+	var clip = null;
+
+//	function $(id) { return document.getElementById(id); }
+
+	function init() {
+		clip = new ZeroClipboard.Client();
+		clip.setHandCursor( true );
+
 		
-		<script type="text/javascript">
-			function checkHeatmap(){
-				var checkbox = document.getElementById("cbType4");
-				if(checkbox.checked){
-					showHeatmap();
-				}
-				else
-				{
-					hideHeatmap();
-				}
+		clip.addEventListener('load', my_load);
+		clip.addEventListener('mouseOver', my_mouse_over);
+		clip.addEventListener('complete', my_complete);
+
+		clip.glue( 'd_clip_button' );
+	}
+
+	function my_load(client) {
+		debugstr("Flash movie loaded and ready.");
+	}
+
+	function my_mouse_over(client) {
+		// we can cheat a little here -- update the text on mouse over
+		// clip.setText( $('map_source').value );
+		// document.getElementById('map_source')
+		clip.setText(document.getElementById('map_source').value);
+	}
+
+	function my_complete(client, text) {
+		debugstr("Copied text to clipboard: " + text );
+	}
+
+	function debugstr(msg) {
+		var p = document.createElement('p');
+		p.innerHTML = msg;
+		$('d_debug').appendChild(p);
+	}
+</script>
+
+<script>
+	$(function() {
+		$( "#amount-range" ).slider({
+			range: true,
+			min: 0,
+			max: 75000000,
+			values: [ 0, 75000000 ],
+			step: 100000,
+			slide: function( event, ui ) {
+				$( "#amount" ).html( formatCurrency(ui.values[ 0 ]) + " - " + formatCurrency(ui.values[ 1 ]) );
 			}
-		</script>
-<script language="javascript">
-
-
-function copy(inElement) {
-  if (inElement.createTextRange) {
-    var range = inElement.createTextRange();
-    if (range)
-      range.execCommand('Copy');
-  } else {
-    var flashcopier = 'flashcopier';
-    if(!document.getElementById(flashcopier)) {
-      var divholder = document.createElement('div');
-      divholder.id = flashcopier;
-      document.body.appendChild(divholder);
-    }
-    document.getElementById(flashcopier).innerHTML = '';
-    var divinfo = '<embed src="_clipboard.swf" FlashVars="clipboard='+encodeURIComponent(inElement.value)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
-    document.getElementById(flashcopier).innerHTML = divinfo;
-  }
-}
+		});
+		$( "#amount" ).html( formatCurrency($( "#amount-range" ).slider( "values", 0 )) +
+		" - " + formatCurrency($( "#amount-range" ).slider( "values", 1 )) );
+	});
 
 </script>
-		
+
 	</body>
 </html>
