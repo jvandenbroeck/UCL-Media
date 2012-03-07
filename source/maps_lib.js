@@ -73,6 +73,10 @@
         searchStr += " AND " + searchType.slice(0, searchType.length - 1) + ")";
 
 
+	searchStr += " AND 'staff' >= " + $( "#employee-range" ).slider( "values", 0 ) + " AND 'staff' <= " + $( "#employee-range" ).slider( "values", 1 );
+	searchStr += " AND 'revenue' >= " + $( "#revenue-range" ).slider( "values", 0 ) + " AND 'revenue' <= " + $( "#revenue-range" ).slider( "values", 1 );
+
+
 
 		//-------end of filter by type code--------
 		
