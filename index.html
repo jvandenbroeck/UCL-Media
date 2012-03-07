@@ -9,11 +9,13 @@
 
 		<!-- Styles -->
 		<link href="assets/css/bootstrap.css" rel="stylesheet">
-		<link href="assets/css/master.css" rel="stylesheet">
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 		<link href='styles/map.css' media='all' rel='stylesheet' type='text/css' />
 
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+
+		<link href="assets/css/master.css" rel="stylesheet">
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
@@ -135,14 +137,15 @@
 					<div class='clear'></div>
 
 					<input class="btn" type="button" id="btnSearch" value="Search" onclick="doSearch();" />
-					<span class='mute'><a href='#' onclick="initialize();">reset map</a></span>
-					<span id='resultCount'>&nbsp;</span>
+					<span class='mute'><a href='#' onclick="initialize();">Reset map</a></span>
+					<b> | </b>	<span class=mute>					<a href="" onclick="printSelection(document.getElementById('map_canvas'));return false">Get HTML</a>
+					</span>
+
+				<span id='resultCount'>&nbsp;</span>
 					<hr />
 
 
 					<!-- start get html --> 
-					<a href="" onclick="printSelection(document.getElementById('map_canvas'));return false">Get HTML code from the map.</a>
-
 
 					<div id=get_html style="display:none">
 					<form name="map_source_form" action="" >
@@ -155,10 +158,10 @@
 								<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div>
 										
 
+								<hr />
 
 							</div>			
 								
-								<hr />
 
 					<p class='mute'>View the raw data in Fusion Tables <a href='http://www.google.com/fusiontables/DataSource?dsrcid=2961086'>here</a>. 
 				</div>
