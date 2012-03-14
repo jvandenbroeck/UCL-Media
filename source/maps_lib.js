@@ -6,6 +6,7 @@
   var map;
   var geocoder;
   var addrMarker;
+  var markersArray = [];
   var addrMarkerImage = 'http://derekeder.com/images/icons/blue-pushpin.png';
   
   var fusionTableId = 2961086; //replace this with the ID of your fusion table
@@ -71,12 +72,8 @@
 			searchType += "'Publishing',";
 
         searchStr += " AND " + searchType.slice(0, searchType.length - 1) + ")";
-
-
-	searchStr += " AND 'staff' >= " + $( "#employee-range" ).slider( "values", 0 ) + " AND 'staff' <= " + $( "#employee-range" ).slider( "values", 1 );
-	searchStr += " AND 'revenue' >= " + $( "#revenue-range" ).slider( "values", 0 ) + " AND 'revenue' <= " + $( "#revenue-range" ).slider( "values", 1 );
-
-
+		searchStr += " AND 'staff' >= " + $( "#employee-range" ).slider( "values", 0 ) + " AND 'staff' <= " + $( "#employee-range" ).slider( "values", 1 );
+		searchStr += " AND 'revenue' >= " + $( "#revenue-range" ).slider( "values", 0 ) + " AND 'revenue' <= " + $( "#revenue-range" ).slider( "values", 1 );
 
 		//-------end of filter by type code--------
 		
@@ -101,15 +98,32 @@
 				  animation: google.maps.Animation.DROP,
 				  title:address
 				});
+				
 				drawSearchRadiusCircle(results[0].geometry.location);
 				
 				searchStr += " AND ST_INTERSECTS(geometry, CIRCLE(LATLNG" + results[0].geometry.location.toString() + "," + searchRadius + "))";
 				
 				//get using all filters
-				console.log(searchStr);
-				searchrecords = new google.maps.FusionTablesLayer(fusionTableId, {
-					query: searchStr}
-					);
+				//console.log(searchStr);
+				if (document.getElementById('cbType4').checked == true)
+				{
+					searchrecords = new google.maps.FusionTablesLayer(fusionTableId, {
+						query: searchStr}
+						);
+						
+					searchrecords.setOptions({
+					heatmap: {
+					  enabled: true
+					}
+				  });
+				}
+					
+				else
+				{
+					searchrecords = new google.maps.FusionTablesLayer(fusionTableId, {
+						query: searchStr}
+						);
+				}
 			
 				searchrecords.setMap(map);
 				displayCount(searchStr);
@@ -123,10 +137,26 @@
 		else
 		{
 			//get using all filters
-			//console.log(searchStr);
-			searchrecords = new google.maps.FusionTablesLayer(fusionTableId, {
-				query: searchStr}
-				);
+			console.log(searchStr);
+			if (document.getElementById('cbType4').checked == true)
+			{
+				searchrecords = new google.maps.FusionTablesLayer(fusionTableId, {
+					query: searchStr}
+					);
+					
+				searchrecords.setOptions({
+                heatmap: {
+                  enabled: true
+                }
+              });
+			}
+				
+			else
+			{
+				searchrecords = new google.maps.FusionTablesLayer(fusionTableId, {
+					query: searchStr}
+					);
+			}
 		
 			searchrecords.setMap(map);
 			displayCount(searchStr);
@@ -149,6 +179,34 @@
 			searchrecords.setMap(map);
 		else
 			records.setMap(map);
+	}
+	
+	// Removes the overlays from the map, but keeps them in the array
+	function clearOverlays() {
+	  if (markersArray) {
+		for (i in markersArray) {
+		  markersArray[i].setMap(null);
+		}
+	  }
+	}
+	
+	// Shows any overlays currently in the array
+	function showOverlays() {
+	  if (markersArray) {
+		for (i in markersArray) {
+		  markersArray[i].setMap(map);
+		}
+	  }
+	}
+
+	// Deletes all markers in the array by removing references to them
+	function deleteOverlays() {
+	  if (markersArray) {
+		for (i in markersArray) {
+		  markersArray[i].setMap(null);
+		}
+		markersArray.length = 0;
+	  }
 	}
 
  function findMe() {
@@ -233,21 +291,4 @@
 			x1 = x1.replace(rgx, '$1' + ',' + '$2');
 		}
 		return x1 + x2;
-	}
-	
-	function showHeatmap()
-	{
-	heatmapLayer = new google.maps.FusionTablesLayer({
-		query: {
-		select: 'geometry',
-		from: '2961086'
-	},
-	heatmap: { enabled: true }
-	});
-	heatmapLayer.setMap(map);
-	}
-	
-	function hideHeatmap()
-	{
-		heatmapLayer.setMap(null);
 	}
