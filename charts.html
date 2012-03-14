@@ -12,6 +12,13 @@
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 		<link href='styles/map.css' media='all' rel='stylesheet' type='text/css' />
 		
+		<style type="text/css">
+		.visualization {
+			 min-height:250px;
+			 height:auto !important;
+		}
+		</style>
+		
 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 		<script type="text/javascript">
       google.load('visualization', '1', { packages: ['corechart'] });
@@ -19,65 +26,44 @@
       function drawVisualization() {
 			// Construct query
 			var type = document.getElementById('visualizationType').value;
-			var selectedQuery = document.getElementById('sortType').value;
 			
-			if (selectedQuery == 'Revenue by Sector')
-			{
-				google.visualization.drawChart({
-					containerId: 'visualization',
-					dataSourceUrl: 'http://www.google.com/fusiontables/gvizdata?tq=',
-					query: 'SELECT sector as Sector, sum(revenue) as Revenue FROM 2961086 GROUP BY sector',
-					chartType: type,
-					options: {
-						title: selectedQuery,
-						vAxis: {
-							title: 'Revenue'
-						},
-						hAxis: {
-							title: 'Sector'
-						}
+			google.visualization.drawChart({
+				containerId: 'visualization',
+				dataSourceUrl: 'http://www.google.com/fusiontables/gvizdata?tq=',
+				query: 'SELECT sector as Sector, sum(revenue) as Revenue FROM 2961086 GROUP BY sector',
+				chartType: type,
+				options: {
+					title: '',
+					vAxis: {
+						title: 'Revenue'
+					},
+					hAxis: {
+						title: 'Sector'
 					}
-				});
-			}
+				}
+			});
 
-			else if (selectedQuery == 'Revenue by Staff')
-			{
-				google.visualization.drawChart({
-					containerId: 'visualization',
-					dataSourceUrl: 'http://www.google.com/fusiontables/gvizdata?tq=',
-					query: 'SELECT staff as Staff, sum(revenue) as Revenue FROM 2961086 GROUP BY staff',
-					chartType: type,
-					options: {
-						title: selectedQuery,
-						vAxis: {
-							title: 'Revenue'
-						},
-						hAxis: {
-							title: 'Staff'
-						}
+			google.visualization.drawChart({
+				containerId: 'visualization2',
+				dataSourceUrl: 'http://www.google.com/fusiontables/gvizdata?tq=',
+				query: 'SELECT sector as Sector, sum(staff) as Staff FROM 2961086 GROUP BY sector',
+				chartType: type,
+				options: {
+					title: '',
+					vAxis: {
+						title: 'Sector'
+					},
+					hAxis: {
+						title: 'Staff'
 					}
-				});
-			}
-			
-			else if (selectedQuery == 'Staff by Sector')
-			{
-				google.visualization.drawChart({
-					containerId: 'visualization',
-					dataSourceUrl: 'http://www.google.com/fusiontables/gvizdata?tq=',
-					query: 'SELECT sector as Sector, sum(staff) as Staff FROM 2961086 GROUP BY sector',
-					chartType: type,
-					options: {
-						title: selectedQuery,
-						vAxis: {
-							title: 'Sector'
-						},
-						hAxis: {
-							title: 'Staff'
-						}
-					}
-				});
-			}
+				}
+			});
       }
+	  
+	  function setDropDown(value)
+	  {
+		document.getElementById('visualizationType').value = value;
+	  }
 
       google.setOnLoadCallback(drawVisualization);
 		</script>
@@ -110,11 +96,24 @@
 
 		<!-- Map and search template by Derek Eder: http://derekeder.com -->
 		<div id="page"> 
-			<div class="content-secondary">			
+			<div class="content-secondary">	 
 				<div id='search'>
 					<p class='tagline'>Select visualization options below:</p>
 					
-					<select id="visualizationType" onchange="drawVisualization();">
+					<div class="well sidebar-nav">
+						<ul class="nav nav-list">
+							<li class="nav-header"></li>
+							<li class="active"><a href="" onclick="setDropDown('LineChart'); drawVisualization(); return false">Line Chart</a></li>
+							<li><a href="" onclick="setDropDown('PieChart'); drawVisualization(); return false">Pie Chart</a></li>
+							<li><a href="" onclick="setDropDown('GeoChart'); drawVisualization(); return false">Geo Chart</a></li>
+							<li><a href="" onclick="setDropDown('Table'); drawVisualization(); return false">Table</a></li>
+							<li><a href="" onclick="setDropDown('BarChart'); drawVisualization(); return false">Bar Chart</a></li>
+							<li><a href="" onclick="setDropDown('ColumnChart'); drawVisualization(); return false">Column Chart</a></li>
+							<li><a href="" onclick="setDropDown('AreaChart'); drawVisualization(); return false">Area Chart</a></li>
+						</ul>
+					</div><!--/.well -->	
+					
+					<select id="visualizationType" onchange="drawVisualization();" style="visibility:hidden">
 						<option value="LineChart" selected="selected">Line Chart</option>
 						<option value="PieChart">Pie Chart</option>
 						<option value="GeoChart">Geo Chart</option>
@@ -124,12 +123,6 @@
 						<option value="AreaChart">Area Chart</option>
 					</select>
 					
-					<select id="sortType" onchange="drawVisualization();">
-						<option value="Revenue by Sector" selected="selected">Revenue by Sector</option>
-						<option value="Revenue by Staff">Revenue by Staff</option>
-						<option value="Staff by Sector">Staff by Sector</option>
-					</select>
-
 					<hr />
 
 					<p class='mute'>View the raw data in Fusion Tables <a href='http://www.google.com/fusiontables/DataSource?dsrcid=2961086'>here</a>. 
@@ -137,7 +130,19 @@
 			</div>
 			
 			<div class="content-primary">
-				<div id="visualization"></div>
+				<div class="row" height="525px">
+					<div class="page-header">
+					  <h1>Revenue by Sector</h1>
+					</div>
+					<div id="visualization" class="visualization"></div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="page-header">
+					  <h1>Revenue by Staff</h1>
+					</div>
+					<div id="visualization2" class="visualization"></div>
+				</div>
 			</div>
 		</div>
 	
