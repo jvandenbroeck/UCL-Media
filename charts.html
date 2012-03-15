@@ -14,8 +14,7 @@
 		
 		<style type="text/css">
 		.visualization {
-			 min-height:250px;
-			 height:auto !important;
+			 height:250px;
 		}
 		</style>
 		
@@ -103,13 +102,20 @@
 					<div class="well sidebar-nav">
 						<ul class="nav nav-list">
 							<li class="nav-header"></li>
-							<li class="active"><a href="" onclick="setDropDown('LineChart'); drawVisualization(); return false">Line Chart</a></li>
-							<li><a href="" onclick="setDropDown('PieChart'); drawVisualization(); return false">Pie Chart</a></li>
-							<li><a href="" onclick="setDropDown('GeoChart'); drawVisualization(); return false">Geo Chart</a></li>
-							<li><a href="" onclick="setDropDown('Table'); drawVisualization(); return false">Table</a></li>
-							<li><a href="" onclick="setDropDown('BarChart'); drawVisualization(); return false">Bar Chart</a></li>
-							<li><a href="" onclick="setDropDown('ColumnChart'); drawVisualization(); return false">Column Chart</a></li>
-							<li><a href="" onclick="setDropDown('AreaChart'); drawVisualization(); return false">Area Chart</a></li>
+							<li class="active" id="LineChart"><a href="" onclick="setDropDown('LineChart'); drawVisualization(); removeActiveNavClass(); $('#LineChart').addClass('active');
+  return false">Line Chart</a></li>
+							<li id="PieChart"><a href="" onclick="setDropDown('PieChart'); drawVisualization(); removeActiveNavClass(); $('#PieChart').addClass('active');
+  return false">Pie Chart</a></li>
+							<li id="GeoChart"><a href="" onclick="setDropDown('GeoChart'); drawVisualization(); removeActiveNavClass(); $('#GeoChart').addClass('active');
+  return false">Geo Chart</a></li>
+							<li id="Table"><a href="" onclick="setDropDown('Table'); drawVisualization(); removeActiveNavClass(); $('#Table').addClass('active');
+  return false">Table</a></li>
+							<li id="BarChart"><a href="" onclick="setDropDown('BarChart'); drawVisualization(); removeActiveNavClass(); $('#BarChart').addClass('active');
+  return false">Bar Chart</a></li>
+							<li id="ColumnChart"><a href="" onclick="setDropDown('ColumnChart'); drawVisualization(); removeActiveNavClass(); $('#ColumnChart').addClass('active');
+  return false">Column Chart</a></li>
+							<li id="AreaChart"><a href="" onclick="setDropDown('AreaChart'); drawVisualization(); removeActiveNavClass(); $('#AreaChart').addClass('active');
+  return false">Area Chart</a></li>
 						</ul>
 					</div><!--/.well -->	
 					
@@ -162,5 +168,19 @@
 				$('.tabs a:last').tab('show')
 			})
 		</script>
+		
+		<script type="text/javascript">
+			function removeActiveNavClass()
+			{
+				$('#LineChart').removeClass('active');
+				$('#PieChart').removeClass('active');
+				$('#GeoChart').removeClass('active');
+				$('#Table').removeClass('active');
+				$('#BarChart').removeClass('active');
+				$('#ColumnChart').removeClass('active');
+				$('#AreaChart').removeClass('active');
+			}
+		</script>
+
 	</body>
 </html>
