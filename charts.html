@@ -100,10 +100,11 @@
 					<div class="well sidebar-nav">
 						<ul class="nav nav-list">
 							<li class="nav-header"></li>
-							<li class="active" id="LineChart"><a href="" onclick="setDropDown('LineChart'); drawVisualization(); removeActiveNavClass(); $('#LineChart').addClass('active');
-  return false">Line Chart</a></li>
-							<li id="PieChart"><a href="" onclick="setDropDown('PieChart'); drawVisualization(); removeActiveNavClass(); $('#PieChart').addClass('active');
+							
+							<li class="active" id="PieChart"><a href="" onclick="setDropDown('PieChart'); drawVisualization(); removeActiveNavClass(); $('#PieChart').addClass('active');
   return false">Pie Chart</a></li>
+							<li id="LineChart"><a href="" onclick="setDropDown('LineChart'); drawVisualization(); removeActiveNavClass(); $('#LineChart').addClass('active');
+  return false">Line Chart</a></li>
 							<li id="GeoChart"><a href="" onclick="setDropDown('GeoChart'); drawVisualization(); removeActiveNavClass(); $('#GeoChart').addClass('active');
   return false">Geo Chart</a></li>
 							<li id="Table"><a href="" onclick="setDropDown('Table'); drawVisualization(); removeActiveNavClass(); $('#Table').addClass('active');
@@ -118,8 +119,8 @@
 					</div><!--/.well -->	
 					
 					<select id="visualizationType" onchange="drawVisualization();" style="visibility:hidden">
-						<option value="LineChart" selected="selected">Line Chart</option>
-						<option value="PieChart">Pie Chart</option>
+						<option value="PieChart" selected="selected">Pie Chart</option>
+						<option value="LineChart">Line Chart</option>
 						<option value="GeoChart">Geo Chart</option>
 						<option value="Table">Table</option>
 						<option value="BarChart">Bar Chart</option>
