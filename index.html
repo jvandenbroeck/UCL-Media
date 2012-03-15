@@ -90,9 +90,9 @@
 		<div id="page"> 
 			<div class="content-secondary">
 				<div id='search'>
-					<p class='tagline'>Select visualization options below:</p>
+					<h4>Options:</h4>
 					<ul class='options-v'>
-						<li><span><label for='cbType4'><input type='checkbox' id='cbType4'/>Show heatmap overlay</label></span> </li>
+						<li><span><label for='cbType4'><input type='checkbox' id='cbType4'/>Display heatmap overlay</label></span> </li>
 					</ul>
 					<h4>Sector</h4>
 					<ul class='options-v'>
@@ -100,45 +100,41 @@
 						<li><span id="label-green"><label for='cbType2'><input type='checkbox' id='cbType2'/>Games Industry</label></span></li>
 						<li><span id="label-red"><label for='cbType3'><input type='checkbox' id='cbType3'/>Film Production</label></span> </li>
 					</ul>
+					
+					<p>
+						<h4>Revenue range</h4>
+						<input type="text" id="revenue" style="border:0; color:#f6931f; font-weight:bold;" />
+					</p>
+
+					<div id="revenue-range"></div>
+
+					<p>
+						<h4>Employee range</h4>
+						<input type="text" id="employee" style="border:0; color:#f6931f; font-weight:bold;" />
+					</p>
+
+					<div id="employee-range"></div>
+
+					<br>
 
 					<div class='input-addr'>
 						<h4>Address <span>(<a href='#' onclick="findMe(); return false;">find me</a>)</span></h4>
-						<p><input class='txt hint' type="text" title="Enter an address or an intersection &hellip;" id="txtSearchAddress" onkeydown="if (event.keyCode == 13) document.getElementById('btnSearch').click()"/></p>
+						<p><input class='txt hint' type="text" title="Enter an address or location &hellip;" id="txtSearchAddress" onkeydown="if (event.keyCode == 13) document.getElementById('btnSearch').click()"/></p>
 					</div>
 
 					<div class='input-radius'>
 						<h4>&nbsp;<span class='mute'>within &hellip;</span></h4>
 						<p>
 						<select id='ddlRadius'>
-							<option value='400'>400 meters</option>
-							<option value='805'>1/2 mile</option>
-							<option value='1610'>1 mile</option>
-							<option value='3220'>2 miles</option>
-							<option value='6438'>4 miles</option>
+							<option value='500'>500 m</option>
+							<option value='1000'>1 km</option>
+							<option value='2000'>2 km</option>
+							<option value='4000'>4 km</option>
+							<option value='8000'>8 km</option>
+							<option value='16000'>16 km</option>
 						</select>
 						</p>
 					</div>
-
-<p>
-
-
-<h4>Revenue range</h4>
-	<input type="text" id="revenue" style="border:0; color:#f6931f; font-weight:bold;" />
-</p>
-
-<div id="revenue-range"></div>
-
-<br>
-
-
-<h4>Employees </h4>
-	<input type="text" id="employee" style="border:0; color:#f6931f; font-weight:bold;" />
-</p>
-
-<div id="employee-range"></div>
-
-<br>
-
 
 					<div class='clear'></div>
 
@@ -154,19 +150,14 @@
 					<!-- start get html --> 
 
 					<div id=get_html style="display:none">
-					<form name="map_source_form" action="" >
-						<textarea rows=4 cols=45 id=map_source disabled=disabled name=map_source onChange="clip.setText(this.value)">
-						</textarea>
-					</form> 
+						<form name="map_source_form" action="">
+							<textarea rows=4 cols=45 id=map_source disabled=disabled name=map_source onChange="clip.setText(this.value)">
+							</textarea>
+						</form> 
 
-
-
-								<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div>
-										
-
-								<hr />
-
-							</div>			
+						<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div>
+						<hr />
+					</div>			
 								
 
 					<p class='mute'>View the raw data in Fusion Tables <a href='http://www.google.com/fusiontables/DataSource?dsrcid=2961086'>here</a>. 

@@ -180,36 +180,8 @@
 		else
 			records.setMap(map);
 	}
-	
-	// Removes the overlays from the map, but keeps them in the array
-	function clearOverlays() {
-	  if (markersArray) {
-		for (i in markersArray) {
-		  markersArray[i].setMap(null);
-		}
-	  }
-	}
-	
-	// Shows any overlays currently in the array
-	function showOverlays() {
-	  if (markersArray) {
-		for (i in markersArray) {
-		  markersArray[i].setMap(map);
-		}
-	  }
-	}
 
-	// Deletes all markers in the array by removing references to them
-	function deleteOverlays() {
-	  if (markersArray) {
-		for (i in markersArray) {
-		  markersArray[i].setMap(null);
-		}
-		markersArray.length = 0;
-	  }
-	}
-
- function findMe() {
+	function findMe() {
 	  // Try W3C Geolocation (Preferred)
 	  var foundLocation;
 	  
