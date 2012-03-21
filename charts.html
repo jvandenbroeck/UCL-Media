@@ -140,6 +140,17 @@
 					  <h1>Revenue by Sector</h1>
 					</div>
 					<div id="visualization" class="visualization"></div>
+
+
+<div id=copyA>
+
+	<a href="" onclick="printSelection(document.getElementById('visualization'));return false">Get HTML</a>
+
+
+					
+
+</div> 
+
 				</div>
 				<br>
 				<div class="row">
@@ -147,7 +158,38 @@
 					  <h1>Revenue by Staff</h1>
 					</div>
 					<div id="visualization2" class="visualization"></div>
+
+
+
+<div id=copyA>
+
+	<a href="" onclick="printSelection(document.getElementById('visualization2'));return false">Get HTML</a>
+
+
+					
+
+</div> 
+
+
+
 				</div>
+
+				<div id=get_html style="display:none">
+					<div class="page-header">
+						<br>
+					  <h1>HTML Source</h1>
+					</div>
+<br>
+						<form name="map_source_form" action="">
+							<textarea rows=4 cols=45 id=map_source disabled=disabled name=map_source onChange="clip.setText(this.value)">
+							</textarea>
+						</form> 
+
+						<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div>
+						<hr />
+					</div>		
+
+
 			</div>
 		</div>
 	
@@ -181,5 +223,64 @@
 			}
 		</script>
 
+
+
+<script type="text/javascript">
+	function printSelection(node){
+		var content = node.innerHTML;
+
+		//document.map_source.textarea.value = content
+
+		document.getElementById('map_source').innerText= content;
+		document.getElementById('get_html').style.display='block';
+	}
+</script>
+
+<script type="text/javascript" src="zeroclipboard/ZeroClipboard.js"></script>
+<style type="text/css">
+
+	.my_clip_button { width:150px; text-align:center; border:1px solid black; background-color:#ccc; margin:10px; padding:10px; cursor:default; font-size:9pt; }
+	.my_clip_button.hover { background-color:#eee; }
+	.my_clip_button.active { background-color:#aaa; }
+</style>
+
+<script language="JavaScript">
+	var clip = null;
+
+//	function $(id) { return document.getElementById(id); }
+
+	function init() {
+		clip = new ZeroClipboard.Client();
+		clip.setHandCursor( true );
+
+		
+		clip.addEventListener('load', my_load);
+		clip.addEventListener('mouseOver', my_mouse_over);
+		clip.addEventListener('complete', my_complete);
+
+		clip.glue( 'd_clip_button' );
+	}
+
+	function my_load(client) {
+		debugstr("Flash movie loaded and ready.");
+	}
+
+	function my_mouse_over(client) {
+		// we can cheat a little here -- update the text on mouse over
+		// clip.setText( $('map_source').value );
+		// document.getElementById('map_source')
+		clip.setText(document.getElementById('map_source').value);
+	}
+
+	function my_complete(client, text) {
+		debugstr("Copied text to clipboard: " + text );
+	}
+
+	function debugstr(msg) {
+		var p = document.createElement('p');
+		p.innerHTML = msg;
+		$('d_debug').appendChild(p);
+	}
+</script>
 	</body>
 </html>
